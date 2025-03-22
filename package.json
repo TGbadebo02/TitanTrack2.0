@@ -1,0 +1,23 @@
+{
+  "name": "titantrack2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "expo": "^52.0.40",
+    "nativewind": "^4.1.23",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "^0.76.7"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
