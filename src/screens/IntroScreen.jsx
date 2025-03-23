@@ -26,7 +26,7 @@ const IntroScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('AdvertisingPage')}
         >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   flexDirection: 'row',
   alignItems: 'center',
   marginBottom: 20,
-  position: 'relative', =
+  position: 'relative',
 },
 
 logoText: {
