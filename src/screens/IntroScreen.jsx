@@ -47,12 +47,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
- logoRow: {
+logoRow: {
   flexDirection: 'row',
   alignItems: 'center',
-  marginBottom: 20,
-  position: 'relative',
+  justifyContent: 'center',
+  marginBottom: -20,  // was 20
 },
+
 
 logoText: {
   fontSize: 32,
@@ -62,12 +63,12 @@ logoText: {
 },
 
 logoImage: {
-  position: 'absolute',
   right: 100,
   width: 120,
   height: 120,
   resizeMode: 'contain',
-  top: -45,
+  marginLeft: 20,
+  marginTop: -25,
 },
 
   button: {

@@ -8,24 +8,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const AdvertisingPage = ({ navigation }) => {
+const AdvertisingPage2 = ({ navigation }) => {
   return (
     <ImageBackground
-      source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/intense-workout 1.png')}
+      source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/workout-image2 1.png')}
       style={styles.background}
     >
      <View style={styles.bottomPanel}>
   <View style={styles.panelContent}>
-  <Text style={styles.subtitle}>find the workout for you,</Text>
+  <Text style={styles.subtitle}>Maintain a healthy lifestyle,</Text>
 
   <View style={styles.inlineRow}>
     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.circleButton}>
       <Ionicons name="arrow-back" size={26} color="#fff" />
     </TouchableOpacity>
 
-    <Text style={styles.boldText}>Workout now!</Text>
+    <Text style={styles.boldText}>Achieve Goals!</Text>
 
-    <TouchableOpacity onPress={() => navigation.navigate('AdvertisingPage2')} style={styles.circleButton}>
+    <TouchableOpacity onPress={() => console.log('Next')} style={styles.circleButton}>
       <Ionicons name="arrow-forward" size={26} color="#fff" />
     </TouchableOpacity>
     </View>
@@ -35,7 +35,7 @@ const AdvertisingPage = ({ navigation }) => {
   );
 };
 
-export default AdvertisingPage;
+export default AdvertisingPage2;
 
 const styles = StyleSheet.create({
   background: {
