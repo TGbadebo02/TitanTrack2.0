@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     transform: [{ skewY: '-4deg' }],
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
+    marginBottom:-10,
   },
 
   panelContent: {
