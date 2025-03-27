@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 const GenderScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tell me about yourself</Text>
+      <Text style={styles.title}>Tell me about yourself!</Text>
       <Text style={styles.subtitle}>
         Your journey is independent! Give us a few details so we can customise exercises and suggestions for you.
       </Text>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#ccc',
     textAlign: 'center',
-    marginTop: -50,
+    marginTop: -160,
     paddingHorizontal: 10,
   },
   genderOptions: {
-    gap: 80,
+    gap: 120,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: -50,
@@ -90,7 +90,11 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '50%',
+    alignItems: 'center',
+    width: 370,       
+    alignSelf: 'center',
+    marginTop: 10,
+  
   },
   circleButton: {
     backgroundColor: '#22c55e',
