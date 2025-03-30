@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 20, // optional; or use marginHorizontal below
+    gap: 20, 
   },
 
   boldText: {

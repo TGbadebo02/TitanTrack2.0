@@ -22,7 +22,6 @@ const GenderScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Navigation Arrows */}
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.circleButton}
@@ -33,7 +32,7 @@ const GenderScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.navigate('')} // Replace with actual next screen
+          onPress={() => navigation.navigate('AgeScreen')} 
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#ccc',
     textAlign: 'center',
-    marginTop: -160,
+    marginTop: -140,
     paddingHorizontal: 10,
   },
   genderOptions: {
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: 370,       
+    width: 350,       
     alignSelf: 'center',
     marginTop: 10,
   
