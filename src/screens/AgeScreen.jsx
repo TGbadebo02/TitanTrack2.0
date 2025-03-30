@@ -14,25 +14,32 @@ const AgePickerScreen = ({ navigation }) => {
           This helps us create your personalized plan
         </Text>
 
-        <Picker
-          selectedValue={selectedAge}
-          onValueChange={(itemValue) => setSelectedAge(itemValue)}
-          itemStyle={styles.pickerItem}
-          style={styles.picker}
-        >
-          {Array.from({ length: 100 }, (_, i) => {
-            const age = i + 1;
-            return (
-              <Picker.Item
-                key={age}
-                label={age.toString()}
-                value={age.toString()}
-              />
-            );
-          })}
-        </Picker>
+        <View style={styles.pickerWrapper}>
+          <Picker
+            selectedValue={selectedAge}
+            onValueChange={(itemValue) => setSelectedAge(itemValue)}
+            itemStyle={styles.pickerItem}
+            style={styles.picker}
+          >
+            {Array.from({ length: 100 }, (_, i) => {
+              const age = i + 1;
+              return (
+                <Picker.Item
+                  key={age}
+                  label={age.toString()}
+                  value={age.toString()} // Value must be string to avoid errors
+                />
+              );
+            })}
+          </Picker>
+
+          {/* Green indicator lines */}
+          <View style={styles.lineTop} />
+          <View style={styles.lineBottom} />
+        </View>
       </View>
 
+      {/* Navigation Buttons */}
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.circleButton}
@@ -43,7 +50,7 @@ const AgePickerScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.navigate('NextScreen')} 
+          onPress={() => navigation.navigate('NextScreen')} // Replace with actual next screen name
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
@@ -75,12 +82,34 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
   },
+  pickerWrapper: {
+    height: 300,
+    marginTop: 190,
+    justifyContent: 'center',
+    position: 'relative',
+  },
   picker: {
-    height: 200,
+    height: 300,
   },
   pickerItem: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 40,
+  },
+  lineTop: {
+    position: 'absolute',
+    top: 73,
+    left: 80,
+    right: 80,
+    height: 2,
+    backgroundColor: '#22c55e',
+  },
+  lineBottom: {
+    position: 'absolute',
+    bottom: 157,
+    left: 80,
+    right: 80,
+    height: 2,
+    backgroundColor: '#22c55e',
   },
   buttonRow: {
     flexDirection: 'row',
