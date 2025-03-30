@@ -27,19 +27,17 @@ const AgePickerScreen = ({ navigation }) => {
                 <Picker.Item
                   key={age}
                   label={age.toString()}
-                  value={age.toString()} // Value must be string to avoid errors
+                  value={age.toString()} 
                 />
               );
             })}
           </Picker>
 
-          {/* Green indicator lines */}
           <View style={styles.lineTop} />
           <View style={styles.lineBottom} />
         </View>
       </View>
 
-      {/* Navigation Buttons */}
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.circleButton}
@@ -50,7 +48,7 @@ const AgePickerScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.navigate('NextScreen')} // Replace with actual next screen name
+          onPress={() => navigation.navigate('WeightScreen')} 
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
@@ -74,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginTop: 50,
     marginBottom: 10,
   },
   subtitle: {
@@ -115,6 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 40,
+    marginBottom: 30,
   },
   circleButton: {
     backgroundColor: '#22c55e',

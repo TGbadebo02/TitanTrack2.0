@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   title: {
-    fontSize: 35,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#ccc',
     textAlign: 'center',
-    marginTop: -140,
+    marginTop: -120,
     paddingHorizontal: 10,
   },
   genderOptions: {
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     width: 350,       
     alignSelf: 'center',
     marginTop: 10,
+    marginBottom: 50,
   
   },
   circleButton: {
