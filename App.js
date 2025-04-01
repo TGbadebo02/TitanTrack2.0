@@ -8,6 +8,7 @@ import AbtYourself from './src/screens/aboutYourself';
 import AgeScreen   from './src/screens/AgeScreen';
 import WeightScreen from './src/screens/weightScreen';
 import fitnessScrn from './src/screens/fitnessLvl';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
           <Stack.Screen name="AgeScreen" component={AgeScreen}/>
           <Stack.Screen name="WeightScreen" component={WeightScreen}/>
           <Stack.Screen name= "FitnsScreen" component={fitnessScrn}/>
+          <Stack.Screen name= "LoginScreen" component={LoginScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
