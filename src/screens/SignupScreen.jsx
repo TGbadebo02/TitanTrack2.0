@@ -10,26 +10,22 @@ import {
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Login.png')}
+          source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Signup.png')}
           style={styles.imageBackground}
         >
           {/* Top nav */}
           <View style={styles.topRow}>
-            <Text style={styles.link}>Login</Text>
-            <Text style={styles.link} onPress={() => navigation.navigate('SignupScreen')}>
-             Sign up
-            </Text>
+            <Text style={[styles.link, styles.login]}>Login</Text>
+            <Text style={[styles.link]}>Sign up</Text>
           </View>
 
-          {/* Welcome text */}
           <View style={styles.welcomeContainer}>
-            <Text style={styles.welcome}>Welcome back,</Text>
-            <Text style={styles.username}>[Username]</Text>
+            <Text style={styles.welcome}>Welcome!</Text>
           </View>
         </ImageBackground>
 
@@ -46,13 +42,19 @@ const LoginScreen = ({navigation}) => {
             placeholderTextColor="#ccc"
             secureTextEntry
           />
+          <TextInput
+            style={styles.input}
+            placeholder="confirm password"
+            placeholderTextColor="#ccc"
+            secureTextEntry
+          />
 
           <TouchableOpacity>
-            <Text style={styles.forgot}>forgot password?</Text>
+            <Text style={styles.forgot}>already have an account?</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginText}>Login</Text>
+            <Text style={styles.loginText}>Sign up</Text>
           </TouchableOpacity>
 
           <View style={styles.socialIcons}>
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
   },
-  signUp: {
+  login: {
     textDecorationLine: 'underline',
     color: '#4ade80',
   },
