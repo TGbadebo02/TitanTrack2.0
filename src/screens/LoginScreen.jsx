@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground,} from 'react-native';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Backbutton from '../components/backButton';
 
 const LoginScreen = ({navigation}) => {
   return (
@@ -19,6 +13,7 @@ const LoginScreen = ({navigation}) => {
           style={styles.imageBackground}
         >
           {/* Top nav */}
+          <Backbutton onPress={() => navigation.goBack()} style={{ marginTop: 100, marginLeft: 20, alignSelf: 'flex-start' }}/>
           <View style={styles.topRow}>
             <Text style={styles.link}>Login</Text>
             <Text style={styles.link} onPress={() => navigation.navigate('SignupScreen')}>
@@ -88,7 +83,8 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+    gap: 25,
   },
   link: {
     fontSize: 16,
