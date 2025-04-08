@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { useNavigation } from '@react-navigation/native';
 const LoginScreen = () => {
+  const navigation =useNavigation();
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
@@ -20,7 +21,9 @@ const LoginScreen = () => {
         >
           {/* Top nav */}
           <View style={styles.topRow}>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
             <Text style={[styles.link, styles.login]}>Login</Text>
+            </TouchableOpacity>
             <Text style={[styles.link]}>Sign up</Text>
           </View>
 
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     paddingLeft: 30,
-    marginBottom: 300,
+    marginBottom: 320,
   },
   welcome: {
     fontSize: 32,
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     paddingTop: -10,
     paddingBottom: 40,
     justifyContent: 'center',
-    marginTop:-300,
+    marginTop:-320,
   },
   input: {
     backgroundColor: '#444',

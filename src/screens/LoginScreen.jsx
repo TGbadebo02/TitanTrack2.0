@@ -13,7 +13,13 @@ const LoginScreen = ({navigation}) => {
           style={styles.imageBackground}
         >
           {/* Top nav */}
-          <Backbutton onPress={() => navigation.goBack()} style={{ marginTop: 100, marginLeft: 20, alignSelf: 'flex-start' }}/>
+          <Backbutton 
+          onPress={() => navigation.goBack()} 
+          style={{ 
+            top: 40, 
+            left: 20}}
+          />
+
           <View style={styles.topRow}>
             <Text style={styles.link}>Login</Text>
             <Text style={styles.link} onPress={() => navigation.navigate('SignupScreen')}>
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
   forgot: {
     color: '#4ade80',
     marginBottom: 40,
-    transform: [{ skewY: '4deg' }],
+    transform: [{ skewY: '5deg' }],
     paddingLeft: 8,
   },
   loginButton: {
