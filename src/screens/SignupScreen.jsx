@@ -1,16 +1,27 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/config';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-const LoginScreen = () => {
+import {Alert} from 'react-native';
+
+  const SignupScreen = () => {
+    const [email, setEmail] =  useState('');
+    const [password, setPassword] = useState('');
+  
+  const handleSignup = async () => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log('User registered:', userCredential.user.email);
+        Alert.alert('Success', 'User created!');
+      } catch (error) {
+        console.error('Signup Error:', error.message);
+        Alert.alert('Error', error.message);
+      }
+    };
+
   const navigation =useNavigation();
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -38,25 +49,32 @@ const LoginScreen = () => {
             style={styles.input}
             placeholder="email"
             placeholderTextColor="#ccc"
+            value={email}
+            onChangeText={setEmail}
           />
           <TextInput
             style={styles.input}
             placeholder="password"
             placeholderTextColor="#ccc"
             secureTextEntry
+            value = {password}
+            onChangeText={setPassword}
           />
           <TextInput
             style={styles.input}
             placeholder="confirm password"
             placeholderTextColor="#ccc"
             secureTextEntry
+            //value={password}
           />
-
-          <TouchableOpacity>
+          
+          <View style={{transform: [{skewY: '5deg'}]}}>
+          <TouchableOpacity onPress={()=>navigation.navigate('LoginScreen')}>
             <Text style={styles.forgot}>already have an account?</Text>
           </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
             <Text style={styles.loginText}>Sign up</Text>
           </TouchableOpacity>
 
@@ -71,7 +89,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -93,7 +111,8 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+    gap : 36,
   },
   link: {
     fontSize: 16,
@@ -123,13 +142,13 @@ const styles = StyleSheet.create({
     transform: [{ skewY: '-5deg' }],
     paddingHorizontal: 35,
     paddingTop: -10,
-    paddingBottom: 40,
+    paddingBottom: 30,
     justifyContent: 'center',
     marginTop:-320,
   },
   input: {
     backgroundColor: '#444',
-    marginBottom: 12,
+    marginBottom: 13,
     padding: 15,
     borderRadius: 10,
     color: '#fff',
@@ -137,8 +156,7 @@ const styles = StyleSheet.create({
   },
   forgot: {
     color: '#4ade80',
-    marginBottom: 40,
-    transform: [{ skewY: '4deg' }],
+    marginBottom: 20,
     paddingLeft: 8,
   },
   loginButton: {

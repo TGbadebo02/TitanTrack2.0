@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground,} from 'react-native';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Backbutton from '../components/backButton';
+import { auth } from '../firebase/config';
 
 const LoginScreen = ({navigation}) => {
+  useEffect(()=> {
+    console.log("Firebase Auth Ready:", auth);
+  },[]);
+  
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
@@ -14,7 +19,7 @@ const LoginScreen = ({navigation}) => {
         >
           {/* Top nav */}
           <Backbutton 
-          onPress={() => navigation.goBack()} 
+          onPress={() => navigation.navigate('FitnsScreen')} 
           style={{ 
             top: 40, 
             left: 20}}
@@ -48,9 +53,12 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry
           />
 
-          <TouchableOpacity>
-            <Text style={styles.forgot}>forgot password?</Text>
-          </TouchableOpacity>
+          <View style={{ transform: [{ skewY: '5deg' }] }}>
+            <TouchableOpacity>
+              <Text style={styles.forgot}>forgot password?</Text>
+            </TouchableOpacity>
+          </View>
+
 
           <TouchableOpacity style={styles.loginButton}>
             <Text style={styles.loginText}>Login</Text>
@@ -117,7 +125,7 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     backgroundColor: '#2e2e2e',
-    transform: [{ skewY: '-5deg' }],
+    transform: [{ skewY: '-6deg' }],
     paddingHorizontal: 35,
     paddingTop: -10,
     paddingBottom: 40,
@@ -134,8 +142,7 @@ const styles = StyleSheet.create({
   },
   forgot: {
     color: '#4ade80',
-    marginBottom: 40,
-    transform: [{ skewY: '5deg' }],
+    marginBottom: 20,
     paddingLeft: 8,
   },
   loginButton: {
