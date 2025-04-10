@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserProvider } from './src/context/UserOnboardingContext';
 import IntroScreen from "./src/screens/IntroScreen";
 import AdvertPage1 from "./src/screens/advertPage1";
 import AdvertPage2 from './src/screens/advertPage2';
@@ -16,6 +17,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
+        <UserProvider>
         <NavigationContainer>
         <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="IntroScreen" component={IntroScreen} />
@@ -29,5 +31,6 @@ export default function App() {
           <Stack.Screen name= "SignupScreen" component={SignupScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
+      </UserProvider>
     );
   }

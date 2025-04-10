@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {doc,setDoc} from 'firebase/firestore';
+import{db} from '../firebase/config';
 import { auth } from '../firebase/config';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,6 +17,15 @@ import {Alert} from 'react-native';
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log('User registered:', userCredential.user.email);
+
+        await setDoc((db,'users',user.uid),{
+         email: user.email,
+         age:25,
+         gender:'male',
+         fitnessLevel:'beginner',
+         createdAt: new Date()
+        });
+        
         Alert.alert('Success', 'User created!');
       } catch (error) {
         console.error('Signup Error:', error.message);

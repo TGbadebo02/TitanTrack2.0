@@ -31,14 +31,14 @@ const FitnessLevelScreen = ({ navigation }) => {
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('WeightScreen')}
         >
           <Ionicons name="arrow-back" size={26} color="#fff" />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.navigate('LoginScreen')} 
+          onPress={() => navigation.navigate('SignupScreen')} 
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
