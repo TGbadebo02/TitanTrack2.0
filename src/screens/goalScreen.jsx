@@ -1,95 +1,129 @@
-// GoalSelectionScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList,ImageBackground } from 'react-native';
 
-const fitnessGoals = [
-  { id: '1', title: 'Build Muscle' },
-  { id: '2', title: 'Lose Weight' },
-  { id: '3', title: 'Improve Endurance' },
-  { id: '4', title: 'Increase Strength' },
-  { id: '5', title: 'Boost Flexibility' },
+const goals = [
+  { title: 'Build Muscle', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
+  { title: 'Lose Weight', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Lose Weight.png') },
+  { title: 'Improve Endurance', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Heart with Pulse.png') },
+  { title: 'Increase Strength', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
+  { title: 'Boost Flexibility', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Walking.png') },
 ];
 
-const GoalSelectionScreen = ({ navigation }) => {
+
+const FitnessGoalScreen = ({ navigation }) => {
   const [selectedGoal, setSelectedGoal] = useState(null);
 
-  const handleSelect = (goal) => {
-    setSelectedGoal(goal);
-    // You can save to context or navigate here
+  const handleContinue = () => {
+    if (selectedGoal) {
+      // Handle next screen navigation or save to context
+      navigation.navigate('NextScreen'); // replace with your actual next screen
+    }
   };
 
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.goalCard}
+      onPress={() => setSelectedGoal(item.title)}
+    >
+      <ImageBackground
+        source={item.image}
+        style={styles.imageBackground}
+        imageStyle={{ borderRadius: 14 }}
+      >
+        <View style={[styles.overlay, selectedGoal === item.title && styles.activeOverlay]}>
+          <Text style={styles.goalText}>{item.title}</Text>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>What is your fitness goal?</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>What is your fitness goal?</Text>
+
       <FlatList
-        data={fitnessGoals}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[styles.card, selectedGoal === item.title && styles.cardSelected]}
-            onPress={() => handleSelect(item.title)}
-          >
-            <Text style={styles.cardText}>{item.title}</Text>
-            {selectedGoal === item.title && <Ionicons name="checkmark" size={24} color="white" />}
-          </TouchableOpacity>
-        )}
-        contentContainerStyle={{ paddingBottom: 30 }}
+        data={goals}
+        renderItem={renderItem}
+        keyExtractor={(item) => item}
+        contentContainerStyle={styles.goalList}
+        showsVerticalScrollIndicator={false}
       />
 
       <TouchableOpacity
-        style={styles.continueButton}
-        onPress={() => navigation.navigate('NextScreen')}
+        style={[
+          styles.continueButton,
+          !selectedGoal && styles.disabledButton,
+        ]}
+        onPress={handleContinue}
+        disabled={!selectedGoal}
       >
-        <Text style={styles.buttonText}>Continue</Text>
+        <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 
-export default GoalSelectionScreen;
-
+export default FitnessGoalScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1e1e1e',
-    paddingHorizontal: 24,
-    paddingTop: 40,
+    paddingHorizontal: 20,
+    paddingTop: 80,
+    paddingBottom: 30,
   },
-  heading: {
-    fontSize: 28,
-    fontWeight: 'bold',
+  title: {
     color: '#4ade80',
-    marginBottom: 20,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
     textAlign: 'center',
   },
-  card: {
-    backgroundColor: '#333',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  goalList: {
+    gap: 18,
   },
-  cardSelected: {
-    backgroundColor: '#4ade80',
-  },
-  cardText: {
-    fontSize: 18,
-    color: '#fff',
-  },
+  goalCard: {
+  height: 120,
+  borderRadius: 14,
+  overflow: 'hidden',
+},
+
+imageBackground: {
+  flex: 1,
+  justifyContent: 'center',
+},
+
+overlay: {
+  backgroundColor: 'rgba(0,0,0,0.4)',
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+activeOverlay: {
+  backgroundColor: 'rgba(74, 222, 128, 0.45)', // subtle green overlay when selected
+},
+
+goalText: {
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+
   continueButton: {
     backgroundColor: '#4ade80',
     paddingVertical: 16,
     borderRadius: 30,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 30,
   },
-  buttonText: {
+  disabledButton: {
+    backgroundColor: '#3c3c3c',
+    opacity: 0.6,
+  },
+  continueText: {
     color: '#fff',
-    fontSize: 16,
     fontWeight: 'bold',
+    fontSize: 16,
   },
 });
