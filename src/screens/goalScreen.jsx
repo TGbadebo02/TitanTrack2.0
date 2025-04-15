@@ -5,7 +5,7 @@ const goals = [
   { title: 'Build Muscle', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
   { title: 'Lose Weight', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Lose Weight.png') },
   { title: 'Improve Endurance', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Heart with Pulse.png') },
-  { title: 'Increase Strength', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
+  { title: 'Increase Strength', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Dumbbell.png') },
   { title: 'Boost Flexibility', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Walking.png') },
 ];
 
@@ -20,33 +20,38 @@ const FitnessGoalScreen = ({ navigation }) => {
     }
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.goalCard}
-      onPress={() => setSelectedGoal(item.title)}
-    >
-      <ImageBackground
-        source={item.image}
-        style={styles.imageBackground}
-        imageStyle={{ borderRadius: 14 }}
+  const renderItem = ({ item }) => {
+    const isSelected = selectedGoal === item.title;
+  
+    return (
+      <TouchableOpacity
+        style={[
+          styles.goalCard,
+          { backgroundColor: isSelected ? '#49C390' : '#2e2e2e' },
+        ]}
+        onPress={() => setSelectedGoal(item.title)}
       >
-        <View style={[styles.overlay, selectedGoal === item.title && styles.activeOverlay]}>
-          <Text style={styles.goalText}>{item.title}</Text>
-        </View>
-      </ImageBackground>
-    </TouchableOpacity>
-  );
+        <ImageBackground
+          source={item.image}
+          style={styles.imageBackground}
+          imageStyle={{ borderRadius: 14 }}
+        />
+        <Text style={styles.goalText}>{item.title}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>What is your fitness goal?</Text>
 
       <FlatList
-        data={goals}
-        renderItem={renderItem}
-        keyExtractor={(item) => item}
-        contentContainerStyle={styles.goalList}
-        showsVerticalScrollIndicator={false}
+      data={goals}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.title}
+      numColumns={2}
+      columnWrapperStyle={{ justifyContent: 'space-between' }}
+      contentContainerStyle={styles.goalList}
       />
 
       <TouchableOpacity
@@ -80,18 +85,40 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   goalList: {
-    gap: 18,
-  },
-  goalCard: {
-  height: 120,
+  paddingBottom: 20,
+},
+
+goalCard: {
+  width: '48%',
+  aspectRatio: 1,
+  marginBottom: 20,
   borderRadius: 14,
+  backgroundColor: '#2e2e2e',
   overflow: 'hidden',
+  alignItems: 'center',
+  justifyContent: 'center',
 },
 
 imageBackground: {
-  flex: 1,
+  width: '70%',
+  height: '70%',
   justifyContent: 'center',
+  left: 20,
 },
+
+goalText: {
+  color: '#fff',
+  fontWeight: 'bold',
+  fontSize: 14,
+  marginTop: 10,
+  textAlign: 'center',
+},
+
+activeCard: {
+  borderColor: '#4ade80',
+  borderWidth: 2,
+},
+
 
 overlay: {
   backgroundColor: 'rgba(0,0,0,0.4)',
@@ -100,14 +127,15 @@ overlay: {
   alignItems: 'center',
 },
 
-activeOverlay: {
-  backgroundColor: 'rgba(74, 222, 128, 0.45)', // subtle green overlay when selected
-},
+// activeOverlay: {
+//   backgroundColor: 'rgba(74, 222, 128, 0.45)', // subtle green overlay when selected
+// },
 
 goalText: {
   color: '#fff',
   fontSize: 18,
   fontWeight: 'bold',
+  marginTop: -12,
 },
 
   continueButton: {
