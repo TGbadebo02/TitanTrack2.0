@@ -7,6 +7,8 @@ const goals = [
   { title: 'Improve Endurance', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Heart with Pulse.png') },
   { title: 'Increase Strength', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Dumbbell.png') },
   { title: 'Boost Flexibility', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Walking.png') },
+  { title: 'Stay Active', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Active.png') },
+
 ];
 
 
@@ -27,7 +29,7 @@ const FitnessGoalScreen = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.goalCard,
-          { backgroundColor: isSelected ? '#49C390' : '#2e2e2e' },
+          { backgroundColor: isSelected ? '#4ade80' : '#2e2e2e' },
         ]}
         onPress={() => setSelectedGoal(item.title)}
       >
