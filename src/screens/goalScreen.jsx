@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList,ImageBackground } from 'react-native';
+import BackButton from '../components/backButton';
+import FrontButton from '../components/frontButton';
 
 const goals = [
   { title: 'Build Muscle', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
@@ -64,6 +66,8 @@ const FitnessGoalScreen = ({ navigation }) => {
         onPress={handleContinue}
         disabled={!selectedGoal}
       >
+        <BackButton onPress={() => navigation.navigate('FitnsScreen')} style ={{top: -80, left: 6}}/>
+        <FrontButton onPress={() => navigation.navigate('')} style ={{top: -80, right: 6}}/>
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
     </View>

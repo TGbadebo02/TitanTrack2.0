@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 const frontButton = ({onPress, style = {} }) =>{
     return (
         <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
-        <Ionicons name="arrow-back" size={24} color="#fff" />
+        <Ionicons name="arrow-forward" size={24} color="#fff" />
       </TouchableOpacity>
     );
 };
