@@ -31,7 +31,7 @@ const FitnessLevelScreen = ({ navigation }) => {
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.navigate('WeightScreen')}
+          onPress={() => navigation.goBack()}
         >
           <Ionicons name="arrow-back" size={26} color="#fff" />
         </TouchableOpacity>

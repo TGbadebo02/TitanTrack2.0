@@ -66,8 +66,8 @@ const FitnessGoalScreen = ({ navigation }) => {
         onPress={handleContinue}
         disabled={!selectedGoal}
       >
-        <BackButton onPress={() => navigation.navigate('FitnsScreen')} style ={{top: -80, left: 6}}/>
-        <FrontButton onPress={() => navigation.navigate('')} style ={{top: -80, right: 6}}/>
+        <BackButton onPress={() => navigation.goBack()} style ={{top: -80, left: 6}}/>
+        <FrontButton onPress={() => navigation.navigate()} style ={{top: -80, right: 6}}/>
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
     </View>
