@@ -19,7 +19,7 @@ const LoginScreen = ({navigation}) => {
         >
           {/* Top nav */}
           <Backbutton 
-          onPress={() => navigation.navigate('FitnsScreen')} 
+          onPress={() => navigation.goBack()} 
           style={{ 
             top: 40, 
             left: 20}}

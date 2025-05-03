@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList,ImageBackground } from 'react-native';
 import BackButton from '../components/backButton';
 import FrontButton from '../components/frontButton';
+import { saveUserProfile } from '../firebase/userService';
+
 
 const goals = [
   { title: 'Build Muscle', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
@@ -17,16 +19,20 @@ const goals = [
 const FitnessGoalScreen = ({ navigation }) => {
   const [selectedGoal, setSelectedGoal] = useState(null);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (selectedGoal) {
-      // Handle next screen navigation or save to context
-      navigation.navigate('NextScreen'); // replace with your actual next screen
+      try {
+        await saveUserProfile({ fitnessGoal: selectedGoal });
+        navigation.navigate('NextScreen');
+      } catch (error) {
+        console.error('Failed to save profile:', error);
+      }
     }
   };
 
   const renderItem = ({ item }) => {
     const isSelected = selectedGoal === item.title;
-  
+
     return (
       <TouchableOpacity
         style={[
@@ -50,12 +56,12 @@ const FitnessGoalScreen = ({ navigation }) => {
       <Text style={styles.title}>What is your fitness goal?</Text>
 
       <FlatList
-      data={goals}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.title}
-      numColumns={2}
-      columnWrapperStyle={{ justifyContent: 'space-between' }}
-      contentContainerStyle={styles.goalList}
+        data={goals}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.title}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        contentContainerStyle={styles.goalList}
       />
 
       <TouchableOpacity
@@ -66,8 +72,8 @@ const FitnessGoalScreen = ({ navigation }) => {
         onPress={handleContinue}
         disabled={!selectedGoal}
       >
-        <BackButton onPress={() => navigation.goBack()} style ={{top: -80, left: 6}}/>
-        <FrontButton onPress={() => navigation.navigate()} style ={{top: -80, right: 6}}/>
+        <BackButton onPress={() => navigation.goBack()} style={{ top: -80, left: 6 }} />
+        <FrontButton onPress={() => navigation.navigate('SignupScreen')} style={{ top: -80, right: 6 }} />
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
     </View>
@@ -75,6 +81,8 @@ const FitnessGoalScreen = ({ navigation }) => {
 };
 
 export default FitnessGoalScreen;
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -133,9 +141,6 @@ overlay: {
   alignItems: 'center',
 },
 
-// activeOverlay: {
-//   backgroundColor: 'rgba(74, 222, 128, 0.45)', // subtle green overlay when selected
-// },
 
 goalText: {
   color: '#fff',
