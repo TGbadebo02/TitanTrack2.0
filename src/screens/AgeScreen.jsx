@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
+import { UserContext } from '../context/UserOnboardingContext';
 
 const AgePickerScreen = ({ navigation }) => {
+  const {userInfo, setUserInfo} = useContext(UserContext);
   const [selectedAge, setSelectedAge] = useState('25');
+
+  useEffect(() => {
+  if (selectedAge) {
+    setUserInfo({ ...userInfo, age: selectedAge });
+  }
+}, [selectedAge]);
+
 
   return (
     <View style={styles.container}>

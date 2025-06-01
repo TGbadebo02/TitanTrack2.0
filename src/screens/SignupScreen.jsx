@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
+import { UserContext } from '../context/UserOnboardingContext';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {doc,setDoc} from 'firebase/firestore';
 import{db} from '../firebase/config';
@@ -12,19 +13,22 @@ import {Alert} from 'react-native';
   const SignupScreen = () => {
     const [email, setEmail] =  useState('');
     const [password, setPassword] = useState('');
+    const { userInfo } = useContext(UserContext);
+
   
   const handleSignup = async () => {
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log('User registered:', userCredential.user.email);
+        const user = userCredential.user;
 
-        await setDoc((db,'users',user.uid),{
-         email: user.email,
-         age:25,
-         gender:'male',
-         fitnessLevel:'beginner',
-         createdAt: new Date()
-        });
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        ...userInfo,  
+        createdAt: new Date()
+      });
+
+
         
         Alert.alert('Success', 'User created!');
       } catch (error) {

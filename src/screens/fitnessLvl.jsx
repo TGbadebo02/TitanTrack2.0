@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { UserContext} from '../context/UserOnboardingContext';
+import { useContext, useEffect, useState } from 'react';
 
 
 const FitnessLevelScreen = ({ navigation }) => {

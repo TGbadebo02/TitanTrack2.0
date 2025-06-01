@@ -7,6 +7,8 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import {useContext} from 'react';
+import { UserContext } from '../context/UserOnboardingContext';
 
 const AdvertisingPage2 = ({ navigation }) => {
   return (

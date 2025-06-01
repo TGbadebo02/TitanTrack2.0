@@ -1,8 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import {useContext} from 'react';
+import { UserContext } from '../context/UserOnboardingContext';
 
 const GenderScreen = ({ navigation }) => {
+    const {userInfo, setUserInfo} = useContext(UserContext);
+
+    const handleGenderSelect = (gender) => {
+      setUserInfo({ ...userInfo, gender }); 
+     //navigation.navigate('AgeScreen');    
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tell me about yourself!</Text>
@@ -11,12 +20,17 @@ const GenderScreen = ({ navigation }) => {
       </Text>
 
       <View style={styles.genderOptions}>
-        <TouchableOpacity style={[styles.genderCard, {marginBottom: 0}]}>
+        <TouchableOpacity style={[styles.genderCard, {marginBottom: 0}]}
+        onPress={()=> handleGenderSelect('male')}
+        >
           <Ionicons name="male" size={50} color="#fff" />
           <Text style={styles.label}>male</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.genderCard}>
+        <TouchableOpacity 
+        style={styles.genderCard}
+        onPress={()=> handleGenderSelect('female')}
+        >
           <Ionicons name="female" size={50} color="#fff" />
           <Text style={styles.label}>female</Text>
         </TouchableOpacity>
