@@ -6,9 +6,11 @@ import { useContext, useEffect, useState } from 'react';
 
 
 const FitnessLevelScreen = ({ navigation }) => {
+    const { userInfo, setUserInfo } = useContext(UserContext);
+
   const handleSelection = (level) => {
-    console.log("Selected Level:", level);
-    navigation.navigate('NextScreen'); 
+    setUserInfo({ ...userInfo, fitnessLevel: level });
+    navigation.navigate('goalScreen'); 
   };
 
   return (
