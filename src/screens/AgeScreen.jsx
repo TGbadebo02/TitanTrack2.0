@@ -6,11 +6,11 @@ import { UserContext } from '../context/UserOnboardingContext';
 
 const AgePickerScreen = ({ navigation }) => {
   const {userInfo, setUserInfo} = useContext(UserContext);
-  const [selectedAge, setSelectedAge] = useState('25');
+  const [selectedAge, setSelectedAge] = useState(userInfo || '25');
 
   useEffect(() => {
   if (selectedAge) {
-    setUserInfo({ ...userInfo, age: selectedAge });
+    setUserInfo((prev) => ({ ...userInfo, age: selectedAge }));
   }
 }, [selectedAge]);
 

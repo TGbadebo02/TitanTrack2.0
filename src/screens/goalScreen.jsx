@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList,ImageBackground } from 'react-native';
 import BackButton from '../components/backButton';
 import FrontButton from '../components/frontButton';
 import { saveUserProfile } from '../firebase/userService';
+import { UserContext } from '../context/UserOnboardingContext';
+
 
 
 const goals = [
@@ -18,12 +20,17 @@ const goals = [
 
 const FitnessGoalScreen = ({ navigation }) => {
   const [selectedGoal, setSelectedGoal] = useState(null);
+  const { userInfo, setUserInfo } = useContext(UserContext); 
+
 
   const handleContinue = async () => {
     if (selectedGoal) {
       try {
-        await saveUserProfile({ fitnessGoal: selectedGoal });
-        navigation.navigate('NextScreen');
+        setUserInfo({ ...userInfo, fitnessGoal: selectedGoal });
+
+        await saveUserProfile({ ...userInfo, fitnessGoal: selectedGoal });
+
+        navigation.navigate('SignupScreen'); 
       } catch (error) {
         console.error('Failed to save profile:', error);
       }

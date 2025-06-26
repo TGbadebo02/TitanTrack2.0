@@ -1,8 +1,9 @@
 import React, { useState,useContext } from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
 import { UserContext } from '../context/UserOnboardingContext';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import {doc,setDoc} from 'firebase/firestore';
+import { saveUserProfile } from '../firebase/userService';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import {doc,getFirestore,setDoc} from 'firebase/firestore';
 import{db} from '../firebase/config';
 import { auth } from '../firebase/config';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -13,11 +14,17 @@ import {Alert} from 'react-native';
   const SignupScreen = () => {
     const [email, setEmail] =  useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setconfirmPassword] = useState('');
     const { userInfo } = useContext(UserContext);
-
+   
   
   const handleSignup = async () => {
       try {
+        if(password!== confirmPassword){
+        Alert.alert('Error', 'Passwords do not match');
+        return;
+      }
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log('User registered:', userCredential.user.email);
         const user = userCredential.user;
@@ -27,7 +34,6 @@ import {Alert} from 'react-native';
         ...userInfo,  
         createdAt: new Date()
       });
-
 
         
         Alert.alert('Success', 'User created!');
@@ -80,7 +86,8 @@ import {Alert} from 'react-native';
             placeholder="confirm password"
             placeholderTextColor="#ccc"
             secureTextEntry
-            //value={password}
+            value={confirmPassword}
+            onChangeText={setconfirmPassword}
           />
           
           <View style={{transform: [{skewY: '5deg'}]}}>

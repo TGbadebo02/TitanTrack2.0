@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 
 
 const FitnessLevelScreen = ({ navigation }) => {
-    const { userInfo, setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   const handleSelection = (level) => {
     setUserInfo({ ...userInfo, fitnessLevel: level });
