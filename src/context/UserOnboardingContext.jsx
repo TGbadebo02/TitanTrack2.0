@@ -8,7 +8,6 @@ export const UserProvider = ({ children }) => {
     age: '',
     weight: '',
     fitnessLevel: '',
-    goal: '',
   });
 
   return (

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
+import { UserContext } from '../context/UserOnboardingContext';
 
 const WeightPickerScreen = ({ navigation }) => {
   const [weight, setWeight] = useState(54);
+  const {userInfo,setUserInfo} = useContext(UserContext);
 
   return (
     <View style={styles.container}>
@@ -38,7 +40,10 @@ const WeightPickerScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.circleButton}
-          onPress={() => navigation.navigate('FitnsScreen')}
+          onPress={() => {
+            setUserInfo({...userInfo, weight});
+          navigation.navigate('FitnsScreen')
+          }}
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
