@@ -24,18 +24,20 @@ const FitnessGoalScreen = ({ navigation }) => {
 
 
   const handleContinue = async () => {
-    if (selectedGoal) {
-      try {
-        setUserInfo({ ...userInfo, fitnessGoal: selectedGoal });
+  if (selectedGoal) {
+    try {
+      const updatedUserInfo = { ...userInfo, fitnessGoal: selectedGoal };
 
-        await saveUserProfile({ ...userInfo, fitnessGoal: selectedGoal });
-
-        navigation.navigate('SignupScreen'); 
-      } catch (error) {
-        console.error('Failed to save profile:', error);
-      }
+      setUserInfo(updatedUserInfo); // ✅ update context
+      
+      navigation.navigate('SignupScreen');
+    } catch (error) {
+      console.error('Failed to save profile:', error);
     }
-  };
+    console.log("Saving fitnessGoal to context and Firestore:", selectedGoal);
+
+  }
+};
 
   const renderItem = ({ item }) => {
     const isSelected = selectedGoal === item.title;
@@ -80,7 +82,7 @@ const FitnessGoalScreen = ({ navigation }) => {
         disabled={!selectedGoal}
       >
         <BackButton onPress={() => navigation.goBack()} style={{ top: -80, left: 6 }} />
-        <FrontButton onPress={() => navigation.navigate('SignupScreen')} style={{ top: -80, right: 6 }} />
+        <FrontButton onPress={handleContinue} style={{ top: -80, right: 6 }} />
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
     </View>
