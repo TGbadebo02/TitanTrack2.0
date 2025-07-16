@@ -36,7 +36,13 @@ import {Alert} from 'react-native';
       });
 
         
-        Alert.alert('Success', 'User created!');
+    Alert.alert('Success', 'User created!');
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'ProfileScreen' }]
+     });
+
       } catch (error) {
         console.error('Signup Error:', error.message);
         Alert.alert('Error', error.message);
