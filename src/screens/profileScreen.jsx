@@ -11,6 +11,7 @@ const ProfileScreen = () => {
       <Text style={styles.subText}>The more we know about you, the better we can tailor your fitness plan.</Text>
 
       <View style={styles.profilePhotoContainer}>
+        <Image source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Profile.png')} style={styles.profilePhoto}/>
         <Text style={styles.changePhotoText}>change your profile photo</Text>
       </View>
 
@@ -83,10 +84,10 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 28,
-    color: '#4ade80',
+    color: '#FFFFFF',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 35,
   },
   subText: {
     color: '#bbb',
@@ -98,10 +99,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   profilePhoto: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#333',
+    width: 200,
+    height: 200,
   },
   changePhotoText: {
     marginTop: 10,
