@@ -1,10 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { UserContext } from '../context/UserOnboardingContext';
+import { getAuth } from "firebase/auth"
 
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
+  useEffect(() => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (currentUser?.email && !userInfo.email) {
+      setUserInfo((prev) => ({
+        ...prev,
+        email: currentUser.email,
+      }));
+    }
+  }, []);
+
+  console.log('userInfo:', userInfo);
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>How old are you?</Text>

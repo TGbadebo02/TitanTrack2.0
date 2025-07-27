@@ -15,11 +15,17 @@ import {Alert} from 'react-native';
     const [email, setEmail] =  useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setconfirmPassword] = useState('');
-    const { userInfo } = useContext(UserContext);
+    const { userInfo, setUserInfo } = useContext(UserContext);
    
   
   const handleSignup = async () => {
       try {
+        
+        if (!email || !password) {
+      Alert.alert('Missing Fields', 'Please enter an email and password.');
+      return;
+    }
+
         if(password!== confirmPassword){
         Alert.alert('Error', 'Passwords do not match');
         return;
@@ -72,13 +78,14 @@ import {Alert} from 'react-native';
 
         {/* Slanted Form Panel */}
         <View style={styles.formContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="email"
-            placeholderTextColor="#ccc"
-            value={email}
-            onChangeText={setEmail}
-          />
+       <TextInput
+        placeholder="Email"
+        placeholderTextColor="#ccc"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        />
+
           <TextInput
             style={styles.input}
             placeholder="password"
