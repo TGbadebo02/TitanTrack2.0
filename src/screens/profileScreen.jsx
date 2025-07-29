@@ -1,10 +1,12 @@
-import React, { useContext,useEffect } from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { UserContext } from '../context/UserOnboardingContext';
 import { getAuth } from "firebase/auth"
 
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
+  //this is going to be for transitioning from view to edit mode, when the edit button is toggled.
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
@@ -34,6 +36,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.firstname}
+        editable={isEditing} // this useState makes it ediable so it changes it state when edits are made.
         onChangeText={(text) => setUserInfo({ ...userInfo, firstname: text })}
       />
       <TextInput
@@ -41,6 +44,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.surname}
+        editable={isEditing} 
         onChangeText={(text) => setUserInfo({ ...userInfo, surname: text })}
       />
       <TextInput
@@ -48,6 +52,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.email}
+        editable={isEditing} 
         onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
       />
       <TextInput
@@ -55,6 +60,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.mobile}
+        editable={isEditing} 
         onChangeText={(text) => setUserInfo({ ...userInfo, mobile: text })}
       />
 
