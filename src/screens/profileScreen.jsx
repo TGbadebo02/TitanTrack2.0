@@ -19,8 +19,15 @@ const ProfileScreen = () => {
       }));
     }
   }, []);
+  
+  //this function basically saves the ne updated data.
+  const handleSave = () => {
+    console.log('Profile Saved:', userInfo);
+    setIsEditing(false);
+  }
 
-  console.log('userInfo:', userInfo);
+
+  //console.log('userInfo:', userInfo);
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>How old are you?</Text>
@@ -85,10 +92,16 @@ const ProfileScreen = () => {
           <Text style={styles.cardValue}>{userInfo.age || '-'}</Text>
         </View>
       </View>
-
-      <TouchableOpacity style={styles.editButton}>
-        <Text style={styles.editButtonText}>edit</Text>
+        
+      <TouchableOpacity style={styles.editButton} onPress={() => setIsEditing(!isEditing)}>
+        <Text style={styles.editButtonText}>{isEditing ? 'Save' : 'Edit'}</Text>
       </TouchableOpacity>
+
+      {isEditing && (
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.saveButtonText}></Text>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 };
