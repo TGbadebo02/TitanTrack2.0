@@ -2,6 +2,8 @@ import React, { useContext,useEffect,useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { UserContext } from '../context/UserOnboardingContext';
 import { getAuth } from "firebase/auth"
+import BottomNavbar from '../components/bottomNavBar';
+import bottomNavbar from '../components/bottomNavBar';
 
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
@@ -29,6 +31,7 @@ const ProfileScreen = () => {
 
   //console.log('userInfo:', userInfo);
   return (
+
     <ScrollView style={styles.container}>
       <Text style={styles.header}>How old are you?</Text>
       <Text style={styles.subText}>The more we know about you, the better we can tailor your fitness plan.</Text>

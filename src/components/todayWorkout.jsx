@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Stylesheet, TouchableOpcity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpcity} from 'react-native';
 
 const todayWorkout = () => {
 
@@ -34,7 +34,7 @@ export default todayWorkout;
 
 
 
-const styles = Stylesheet.create({
+const styles = StyleSheet.create({
  card: {
     backgroundColor: '#121212',
     borderRadius: 20,
