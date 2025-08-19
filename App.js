@@ -13,8 +13,20 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import goalScreen from './src/screens/goalScreen';
 import profileScreen from './src/screens/profileScreen';
+import homeScreen from './src/screens/homeScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function Tabs(){
+  return(
+    <Tab.Navigator screenOptions={{headerShown:false}}>
+      <Tab.Screen name="Home" component={homeScreen}/>
+      <Tab.Screen name="Profile" component={profileScreen}/>
+    </Tab.Navigator>
+  );
+}
 
 
 export default function App() {
@@ -22,6 +34,7 @@ export default function App() {
         <UserProvider>
         <NavigationContainer>
         <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name = "Tabs" component={Tabs}/>
           <Stack.Screen name="IntroScreen" component={IntroScreen} />
           <Stack.Screen name="AdvertisingPage" component={AdvertPage1} />
           <Stack.Screen name="AdvertisingPage2" component={AdvertPage2}/>
@@ -32,7 +45,6 @@ export default function App() {
           <Stack.Screen name= "goalScreen"  component={goalScreen}/>
           <Stack.Screen name= "LoginScreen" component={LoginScreen}/>
           <Stack.Screen name= "SignupScreen" component={SignupScreen}/>
-          <Stack.Screen name="ProfileScreen" component={profileScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
       </UserProvider>

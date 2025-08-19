@@ -44,10 +44,8 @@ import {Alert} from 'react-native';
         
     Alert.alert('Success', 'User created!');
 
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'ProfileScreen' }]
-     });
+   navigation.navigate('Tabs', { screen: 'Profile' });
+
 
       } catch (error) {
         console.error('Signup Error:', error.message);

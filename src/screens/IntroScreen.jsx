@@ -11,7 +11,7 @@ import {
 const IntroScreen = ({ navigation }) => {
   return (
     <ImageBackground
-      source={require("/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Intro-page.png")} 
+      source={require("/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Intro-page-2.png")} 
       style={styles.background}
     >
       <View style={styles.overlay}>
