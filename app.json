@@ -20,15 +20,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.titantrack"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.titantrack"
     },
-    "web": {
-    },
+    "web": {},
     "plugins": [
       "expo-asset"
     ]

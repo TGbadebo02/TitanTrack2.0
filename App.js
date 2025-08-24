@@ -6,6 +6,7 @@ import IntroScreen from "./src/screens/IntroScreen";
 import AdvertPage1 from "./src/screens/advertPage1";
 import AdvertPage2 from './src/screens/advertPage2';
 import AbtYourself from './src/screens/aboutYourself';
+import reportScreen from './src/screens/reportScreen';
 import AgeScreen   from './src/screens/AgeScreen';
 import WeightScreen from './src/screens/weightScreen';
 import fitnessScrn from './src/screens/fitnessLvl';
@@ -24,6 +25,7 @@ function Tabs(){
     <Tab.Navigator screenOptions={{headerShown:false}}>
       <Tab.Screen name="Home" component={homeScreen}/>
       <Tab.Screen name="Profile" component={profileScreen}/>
+      <Tab.Screen name="Report" component={reportScreen}/>
     </Tab.Navigator>
   );
 }
@@ -34,7 +36,7 @@ export default function App() {
         <UserProvider>
         <NavigationContainer>
         <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name = "Tabs" component={Tabs}/>
+        <Stack.Screen name = "Tabs" component={Tabs} options={{headerShown:false}}/>
           <Stack.Screen name="IntroScreen" component={IntroScreen} />
           <Stack.Screen name="AdvertisingPage" component={AdvertPage1} />
           <Stack.Screen name="AdvertisingPage2" component={AdvertPage2}/>

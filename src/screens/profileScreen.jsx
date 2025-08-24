@@ -135,11 +135,12 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   profilePhoto: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
   },
   changePhotoText: {
-    marginTop: 10,
+    marginBottom: -10,
+    marginTop: 5,
     color: '#bbb',
   },
   input: {
