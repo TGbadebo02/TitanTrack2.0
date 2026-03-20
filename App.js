@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider } from './src/context/UserOnboardingContext';
@@ -20,23 +21,41 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Tabs(){
-  return(
-    <Tab.Navigator screenOptions={{headerShown:false}}>
-      <Tab.Screen name="Home" component={homeScreen}/>
-      <Tab.Screen name="Profile" component={profileScreen}/>
-      <Tab.Screen name="Report" component={reportScreen}/>
+const tabIcons = {
+  Home: require('./src/assets/icons/Home.png'),
+  Profile: require('./src/assets/icons/Profile.png'),
+  Report: require('./src/assets/icons/Bar Chart.png'),
+};
+
+function Tabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: styles.tabBar,
+        tabBarIcon: ({ focused }) => (
+          <Image
+            source={tabIcons[route.name]}
+            style={[styles.tabIcon, !focused && styles.tabIconInactive]}
+          />
+        ),
+      })}
+    >
+      <Tab.Screen name="Home" component={homeScreen} />
+      <Tab.Screen name="Profile" component={profileScreen} />
+      <Tab.Screen name="Report" component={reportScreen} />
     </Tab.Navigator>
   );
 }
 
 
 export default function App() {
-    return (
-        <UserProvider>
-        <NavigationContainer>
+  return (
+    <UserProvider>
+      <NavigationContainer>
         <Stack.Navigator initialRouteName="IntroScreen" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name = "Tabs" component={Tabs} options={{headerShown:false}}/>
+          <Stack.Screen name = "Tabs" component={Tabs} options={{headerShown:false}}/>
           <Stack.Screen name="IntroScreen" component={IntroScreen} />
           <Stack.Screen name="AdvertisingPage" component={AdvertPage1} />
           <Stack.Screen name="AdvertisingPage2" component={AdvertPage2}/>
@@ -49,6 +68,24 @@ export default function App() {
           <Stack.Screen name= "SignupScreen" component={SignupScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
-      </UserProvider>
-    );
-  }
+    </UserProvider>
+  );
+}
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: '#2a2426',
+    borderTopWidth: 0,
+    height: 78,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  tabIcon: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+  },
+  tabIconInactive: {
+    opacity: 0.85,
+  },
+});
