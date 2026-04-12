@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "expo start",
+    "start:clear": "expo start --clear",
+    "start:tunnel": "expo start --tunnel",
     "test": "echo \"Error: no test specified\" && exit 1",
     "android": "expo run:android",
     "ios": "expo run:ios"

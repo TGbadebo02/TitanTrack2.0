@@ -27,7 +27,7 @@ const AdvertisingPage2 = ({ navigation }) => {
 
     <Text style={styles.boldText}>Achieve Goals!</Text>
 
-    <TouchableOpacity onPress={() => navigation.navigate('AbtYourself')} style={styles.circleButton}>
+    <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')} style={styles.circleButton}>
       <Ionicons name="arrow-forward" size={26} color="#fff" />
     </TouchableOpacity>
     </View>

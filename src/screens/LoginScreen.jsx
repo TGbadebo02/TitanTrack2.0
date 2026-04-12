@@ -27,7 +27,7 @@ const LoginScreen = ({navigation}) => {
 
           <View style={styles.topRow}>
             <Text style={styles.link}>Login</Text>
-            <Text style={styles.link} onPress={() => navigation.navigate('SignupScreen')}>
+            <Text style={styles.link} onPress={() => navigation.navigate('AbtYourself')}>
              Sign up
             </Text>
           </View>
