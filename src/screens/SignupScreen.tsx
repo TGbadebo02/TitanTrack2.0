@@ -1,59 +1,65 @@
-import React, { useState,useContext } from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
-import { UserContext } from '../context/UserOnboardingContext';
-import { saveUserProfile } from '../firebase/userService';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import {doc,getFirestore,setDoc} from 'firebase/firestore';
-import{db} from '../firebase/config';
-import { auth } from '../firebase/config';
+import React, { useContext, useState } from 'react';
+import {
+  Alert,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { useNavigation, type NavigationProp, type ParamListBase } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
-import {Alert} from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-  const SignupScreen = () => {
-    const [email, setEmail] =  useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setconfirmPassword] = useState('');
-    const { userInfo, setUserInfo } = useContext(UserContext);
-   
-  
+import { UserContext } from '../context/UserOnboardingContext';
+import { auth } from '../firebase/config';
+import { saveUserProfile } from '../firebase/userService';
+
+const SignupScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const { userInfo } = useContext(UserContext);
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+
   const handleSignup = async () => {
-      try {
-        
-        if (!email || !password) {
-      Alert.alert('Missing Fields', 'Please enter an email and password.');
-      return;
-    }
+    try {
+      if (!email || !password) {
+        Alert.alert('Missing Fields', 'Please enter an email and password.');
+        return;
+      }
 
-        if(password!== confirmPassword){
+      if (password !== confirmPassword) {
         Alert.alert('Error', 'Passwords do not match');
         return;
       }
 
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log('User registered:', userCredential.user.email);
-        const user = userCredential.user;
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log('User registered:', userCredential.user.email);
+      const user = userCredential.user;
 
-      await setDoc(doc(db, 'users', user.uid), {
-        email: user.email,
-        ...userInfo,  
-        createdAt: new Date()
+      await saveUserProfile({
+        ...userInfo,
+        email: user.email ?? email,
+        createdAt: new Date(),
       });
 
-        
-    Alert.alert('Success', 'User created!');
+      Alert.alert('Success', 'User created!');
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Something went wrong.';
 
-   navigation.navigate('Tabs', { screen: 'Profile' });
+      console.error('Signup Error:', message);
+      Alert.alert('Error', message);
+    }
+  };
 
-
-      } catch (error) {
-        console.error('Signup Error:', error.message);
-        Alert.alert('Error', error.message);
-      }
-    };
-
-  const navigation =useNavigation();
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
@@ -61,12 +67,11 @@ import {Alert} from 'react-native';
           source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Signup.png')}
           style={styles.imageBackground}
         >
-          {/* Top nav */}
           <View style={styles.topRow}>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-            <Text style={[styles.link, styles.login]}>Login</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+              <Text style={[styles.link, styles.login]}>Login</Text>
             </TouchableOpacity>
-            <Text style={[styles.link]}>Sign up</Text>
+            <Text style={styles.link}>Sign up</Text>
           </View>
 
           <View style={styles.welcomeContainer}>
@@ -74,37 +79,37 @@ import {Alert} from 'react-native';
           </View>
         </ImageBackground>
 
-        {/* Slanted Form Panel */}
         <View style={styles.formContainer}>
-       <TextInput
-        placeholder="Email"
-        placeholderTextColor="#ccc"
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        />
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="#ccc"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+          />
 
           <TextInput
             style={styles.input}
             placeholder="password"
             placeholderTextColor="#ccc"
             secureTextEntry
-            value = {password}
+            value={password}
             onChangeText={setPassword}
           />
+
           <TextInput
             style={styles.input}
             placeholder="confirm password"
             placeholderTextColor="#ccc"
             secureTextEntry
             value={confirmPassword}
-            onChangeText={setconfirmPassword}
+            onChangeText={setConfirmPassword}
           />
-          
-          <View style={{transform: [{skewY: '5deg'}]}}>
-          <TouchableOpacity onPress={()=>navigation.navigate('LoginScreen')}>
-            <Text style={styles.forgot}>already have an account?</Text>
-          </TouchableOpacity>
+
+          <View style={{ transform: [{ skewY: '5deg' }] }}>
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+              <Text style={styles.forgot}>already have an account?</Text>
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     right: 20,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap : 36,
+    gap: 36,
   },
   link: {
     fontSize: 16,
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
     paddingTop: -10,
     paddingBottom: 30,
     justifyContent: 'center',
-    marginTop:-320,
+    marginTop: -320,
   },
   input: {
     backgroundColor: '#444',

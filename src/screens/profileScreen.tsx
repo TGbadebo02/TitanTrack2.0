@@ -1,43 +1,97 @@
-import React, { useContext,useEffect,useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { type NavigationProp, type ParamListBase, useNavigation } from '@react-navigation/native';
+import { signOut } from 'firebase/auth';
 import { UserContext } from '../context/UserOnboardingContext';
-import { getAuth } from "firebase/auth"
-import BottomNavbar from '../components/bottomNavBar';
-import bottomNavbar from '../components/bottomNavBar';
+import { auth } from '../firebase/config';
+import { getUserProfile, saveUserProfile } from '../firebase/userService';
+import { initialUserInfo } from '../context/UserOnboardingContext';
 
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
-  //this is going to be for transitioning from view to edit mode, when the edit button is toggled.
   const [isEditing, setIsEditing] = useState(false);
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   useEffect(() => {
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
+    const loadUserProfile = async () => {
+      try {
+        const savedProfile = await getUserProfile();
 
-    if (currentUser?.email && !userInfo.email) {
-      setUserInfo((prev) => ({
-        ...prev,
-        email: currentUser.email,
-      }));
+        if (savedProfile) {
+          setUserInfo((prev) => ({
+            ...prev,
+            ...savedProfile,
+            email: savedProfile.email ?? prev.email,
+          }));
+          return;
+        }
+
+        if (auth.currentUser?.email) {
+          setUserInfo((prev) => ({
+            ...prev,
+            email: auth.currentUser?.email ?? prev.email,
+          }));
+        }
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Unable to load profile.';
+
+        console.error('Profile Load Error:', message);
+      }
+    };
+
+    loadUserProfile();
+  }, [setUserInfo]);
+
+  const handleSave = async () => {
+    try {
+      await saveUserProfile(userInfo);
+      setIsEditing(false);
+      Alert.alert('Saved', 'Your profile has been updated.');
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Unable to save profile.';
+
+      console.error('Profile Save Error:', message);
+      Alert.alert('Error', message);
     }
-  }, []);
-  
-  //this function basically saves the ne updated data.
-  const handleSave = () => {
-    console.log('Profile Saved:', userInfo);
-    setIsEditing(false);
-  }
+  };
 
+  const handleLogout = async () => {
+    try {//
+      await signOut(auth);
+      setUserInfo(initialUserInfo);
+      navigation.navigate('LoginScreen');
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Unable to log out.';
 
-  //console.log('userInfo:', userInfo);
+      console.error('Logout Error:', message);
+      Alert.alert('Error', message);
+    }
+  };
+
   return (
-
     <ScrollView style={styles.container}>
-      <Text style={styles.header}>How old are you?</Text>
-      <Text style={styles.subText}>The more we know about you, the better we can tailor your fitness plan.</Text>
+      <Text style={styles.header}>Your profile</Text>
+      <Text style={styles.subText}>
+        The more we know about you, the better we can tailor your fitness plan.
+      </Text>
 
       <View style={styles.profilePhotoContainer}>
-        <Image source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Profile.png')} style={styles.profilePhoto}/>
+        <Image
+          source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Profile.png')}
+          style={styles.profilePhoto}
+        />
         <Text style={styles.changePhotoText}>change your profile photo</Text>
       </View>
 
@@ -46,7 +100,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.firstname}
-        editable={isEditing} // this useState makes it ediable so it changes it state when edits are made.
+        editable={isEditing}
         onChangeText={(text) => setUserInfo({ ...userInfo, firstname: text })}
       />
       <TextInput
@@ -54,7 +108,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.surname}
-        editable={isEditing} 
+        editable={isEditing}
         onChangeText={(text) => setUserInfo({ ...userInfo, surname: text })}
       />
       <TextInput
@@ -62,7 +116,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.email}
-        editable={isEditing} 
+        editable={isEditing}
         onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
       />
       <TextInput
@@ -70,7 +124,7 @@ const ProfileScreen = () => {
         placeholderTextColor="#ccc"
         style={styles.input}
         value={userInfo.mobile}
-        editable={isEditing} 
+        editable={isEditing}
         onChangeText={(text) => setUserInfo({ ...userInfo, mobile: text })}
       />
 
@@ -95,22 +149,22 @@ const ProfileScreen = () => {
           <Text style={styles.cardValue}>{userInfo.age || '-'}</Text>
         </View>
       </View>
-        
-      <TouchableOpacity style={styles.editButton} onPress={() => setIsEditing(!isEditing)}>
+
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={isEditing ? handleSave : () => setIsEditing(true)}
+      >
         <Text style={styles.editButtonText}>{isEditing ? 'Save' : 'Edit'}</Text>
       </TouchableOpacity>
 
-      {isEditing && (
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveButtonText}></Text>
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Log out</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
 
 export default ProfileScreen;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -183,5 +237,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  logoutButton: {
+    backgroundColor: '#2b2b2b',
+    padding: 16,
+    borderRadius: 30,
+    marginTop: 14,
+    marginBottom: 30,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#575757',
+  },
+  logoutButtonText: {
+    color: '#f4f4f4',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

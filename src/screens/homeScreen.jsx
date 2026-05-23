@@ -155,7 +155,7 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             activeOpacity={0.85}
             style={styles.getStartedButton}
-            onPress={() => navigation.navigate('Report')}
+            onPress={() => navigation.navigate('WorkoutScreen')}
           >
             <Text style={styles.getStartedButtonText}>Get Started</Text>
           </TouchableOpacity>
@@ -186,7 +186,7 @@ const HomeScreen = ({ navigation }) => {
               <TouchableOpacity
                 activeOpacity={0.85}
                 style={styles.shortcutCard}
-                onPress={() => navigation.navigate('Report')}
+                onPress={() => navigation.navigate('WorkoutScreen')}
               >
                 <Text style={styles.shortcutText}>Browse workouts</Text>
               </TouchableOpacity>

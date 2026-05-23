@@ -1,3 +1,8 @@
+import React from 'react';
+import { View } from 'react-native';
 
+const DailyChallenge = () => {
+  return <View />;
+};
 
-const 
+export default DailyChallenge;
