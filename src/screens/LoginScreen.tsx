@@ -15,7 +15,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,6 +24,7 @@ import BackButton from '../components/backButton';
 import { UserContext } from '../context/UserOnboardingContext';
 import { auth } from '../firebase/config';
 import { getUserProfile } from '../firebase/userService';
+import { getAuthErrorMessage } from '../firebase/authErrors';
 //zod defining the valid data form.
 const loginSchema = z.object({
   email: z
@@ -40,6 +41,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginScreen = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
   const { setUserInfo } = useContext(UserContext);
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const {
@@ -74,13 +76,25 @@ const LoginScreen = () => {
 
       Alert.alert('Success', 'Welcome back!');
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Unable to log in.';
-
-      console.error('Login Error:', message);
-      Alert.alert('Login Failed', message);
+      Alert.alert('Login failed', getAuthErrorMessage(error));
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const parsedEmail = z.string().email().safeParse(resetEmail.trim().toLowerCase());
+
+    if (!parsedEmail.success) {
+      Alert.alert('Enter your email', 'Type your account email above, then try again.');
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, parsedEmail.data);
+      Alert.alert('Check your inbox', 'We sent you a link to reset your password.');
+    } catch (error) {
+      Alert.alert('Reset failed', getAuthErrorMessage(error));
     }
   };
 
@@ -88,7 +102,7 @@ const LoginScreen = () => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Login.png')}
+          source={require('../assets/images/Login.png')}
           style={styles.imageBackground}
         >
           <BackButton
@@ -127,7 +141,10 @@ const LoginScreen = () => {
                 autoCapitalize="none"
                 keyboardType="email-address"
                 value={value}
-                onChangeText={onChange}
+                onChangeText={(text) => {
+                  onChange(text);
+                  setResetEmail(text);
+                }}
                 onBlur={onBlur}
                 editable={!isSubmitting}
               />
@@ -158,7 +175,7 @@ const LoginScreen = () => {
           )}
 
           <View style={{ transform: [{ skewY: '5deg' }] }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleForgotPassword} disabled={isSubmitting}>
               <Text style={styles.forgot}>forgot password?</Text>
             </TouchableOpacity>
           </View>

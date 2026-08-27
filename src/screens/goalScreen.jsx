@@ -2,40 +2,30 @@ import React, { useState,useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList,ImageBackground } from 'react-native';
 import BackButton from '../components/backButton';
 import FrontButton from '../components/frontButton';
-import { saveUserProfile } from '../firebase/userService';
 import { UserContext } from '../context/UserOnboardingContext';
 
 
 
 const goals = [
-  { title: 'Build Muscle', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Muscle.png') },
-  { title: 'Lose Weight', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Lose Weight.png') },
-  { title: 'Improve Endurance', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Heart with Pulse.png') },
-  { title: 'Increase Strength', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Dumbbell.png') },
-  { title: 'Boost Flexibility', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Walking.png') },
-  { title: 'Stay Active', image: require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Active.png') },
+  { title: 'Build Muscle', image: require('../assets/icons/Muscle.png') },
+  { title: 'Lose Weight', image: require('../assets/icons/Lose Weight.png') },
+  { title: 'Improve Endurance', image: require('../assets/icons/Heart with Pulse.png') },
+  { title: 'Increase Strength', image: require('../assets/icons/Dumbbell.png') },
+  { title: 'Boost Flexibility', image: require('../assets/icons/Walking.png') },
+  { title: 'Stay Active', image: require('../assets/icons/Active.png') },
 
 ];
 
 
 const FitnessGoalScreen = ({ navigation }) => {
-  const [selectedGoal, setSelectedGoal] = useState(null);
   const { userInfo, setUserInfo } = useContext(UserContext); 
+  const [selectedGoal, setSelectedGoal] = useState(userInfo.fitnessGoal || null);
 
 
-  const handleContinue = async () => {
+  const handleContinue = () => {
   if (selectedGoal) {
-    try {
-      const updatedUserInfo = { ...userInfo, fitnessGoal: selectedGoal };
-
-      setUserInfo(updatedUserInfo); // ✅ update context
-      
-      navigation.navigate('SignupScreen');
-    } catch (error) {
-      console.error('Failed to save profile:', error);
-    }
-    console.log("Saving fitnessGoal to context and Firestore:", selectedGoal);
-
+    setUserInfo((previous) => ({ ...previous, fitnessGoal: selectedGoal }));
+    navigation.navigate('SignupScreen');
   }
 };
 

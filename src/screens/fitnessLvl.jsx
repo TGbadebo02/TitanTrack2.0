@@ -9,7 +9,7 @@ const FitnessLevelScreen = ({ navigation }) => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const handleSelection = (level) => {
-    setUserInfo({ ...userInfo, fitnessLevel: level });
+    setUserInfo((previous) => ({ ...previous, fitnessLevel: level }));
     navigation.navigate('goalScreen'); 
   };
 
@@ -21,15 +21,15 @@ const FitnessLevelScreen = ({ navigation }) => {
         We are able to customise your exercises and recommendations based on your level of fitness. Choose the one that most closely matches your daily schedule, and we'll customise the plan to help you reach your goals!
       </Text>
 
-      <TouchableOpacity style={styles.levelButton} onPress={() => handleSelection('Beginner')}>
+      <TouchableOpacity style={[styles.levelButton, userInfo.fitnessLevel === 'Beginner' && styles.levelButtonSelected]} onPress={() => handleSelection('Beginner')}>
         <Text style={styles.levelText}>Beginner</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.levelButton} onPress={() => handleSelection('Intermediate')}>
+      <TouchableOpacity style={[styles.levelButton, userInfo.fitnessLevel === 'Intermediate' && styles.levelButtonSelected]} onPress={() => handleSelection('Intermediate')}>
         <Text style={styles.levelText}>Intermediate</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.levelButton} onPress={() => handleSelection('Advanced')}>
+      <TouchableOpacity style={[styles.levelButton, userInfo.fitnessLevel === 'Advanced' && styles.levelButtonSelected]} onPress={() => handleSelection('Advanced')}>
         <Text style={styles.levelText}>Advanced</Text>
       </TouchableOpacity>
       <View style={styles.buttonRow}>
@@ -41,8 +41,9 @@ const FitnessLevelScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.circleButton}
+          style={[styles.circleButton, !userInfo.fitnessLevel && styles.circleButtonDisabled]}
           onPress={() => navigation.navigate('goalScreen')} 
+          disabled={!userInfo.fitnessLevel}
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
@@ -94,6 +95,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     textTransform: 'capitalize',
   },
+  levelButtonSelected: {
+    borderColor: '#fff',
+    borderWidth: 3,
+  },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -107,5 +112,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  circleButtonDisabled: {
+    opacity: 0.4,
   },
 });

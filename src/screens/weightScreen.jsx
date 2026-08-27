@@ -5,8 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { UserContext } from '../context/UserOnboardingContext';
 
 const WeightPickerScreen = ({ navigation }) => {
-  const [weight, setWeight] = useState(54);
   const {userInfo,setUserInfo} = useContext(UserContext);
+  const [weight, setWeight] = useState(Number(userInfo.weight) || 54);
 
   return (
     <View style={styles.container}>
@@ -41,7 +41,7 @@ const WeightPickerScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.circleButton}
           onPress={() => {
-            setUserInfo({...userInfo, weight});
+            setUserInfo((previous) => ({...previous, weight: String(weight)}));
           navigation.navigate('FitnsScreen')
           }}
         >

@@ -8,8 +8,7 @@ const GenderScreen = ({ navigation }) => {
     const {userInfo, setUserInfo} = useContext(UserContext);
 
     const handleGenderSelect = (gender) => {
-      setUserInfo({ ...userInfo, gender }); 
-     //navigation.navigate('AgeScreen');    
+      setUserInfo((previous) => ({ ...previous, gender }));
   };
 
   return (
@@ -20,7 +19,7 @@ const GenderScreen = ({ navigation }) => {
       </Text>
 
       <View style={styles.genderOptions}>
-        <TouchableOpacity style={[styles.genderCard, {marginBottom: 0}]}
+        <TouchableOpacity style={[styles.genderCard, userInfo.gender === 'male' && styles.genderCardSelected, {marginBottom: 0}]}
         onPress={()=> handleGenderSelect('male')}
         >
           <Ionicons name="male" size={50} color="#fff" />
@@ -28,7 +27,7 @@ const GenderScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity 
-        style={styles.genderCard}
+        style={[styles.genderCard, userInfo.gender === 'female' && styles.genderCardSelected]}
         onPress={()=> handleGenderSelect('female')}
         >
           <Ionicons name="female" size={50} color="#fff" />
@@ -45,8 +44,9 @@ const GenderScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.circleButton}
+          style={[styles.circleButton, !userInfo.gender && styles.circleButtonDisabled]}
           onPress={() => navigation.navigate('AgeScreen')} 
+          disabled={!userInfo.gender}
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
         </TouchableOpacity>
@@ -94,6 +94,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  genderCardSelected: {
+    borderColor: '#fff',
+    borderWidth: 3,
+  },
   label: {
     color: '#fff',
     fontSize: 14,
@@ -117,5 +121,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  circleButtonDisabled: {
+    opacity: 0.4,
   },
 });

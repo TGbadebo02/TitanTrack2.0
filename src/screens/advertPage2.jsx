@@ -13,7 +13,7 @@ import { UserContext } from '../context/UserOnboardingContext';
 const AdvertisingPage2 = ({ navigation }) => {
   return (
     <ImageBackground
-      source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/workout-image2 1.png')}
+      source={require('../assets/images/workout-image2 1.png')}
       style={styles.background}
     >
      <View style={styles.bottomPanel}>

@@ -1,6 +1,8 @@
 import { initializeApp, type FirebaseOptions } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeAuth, type Persistence } from 'firebase/auth';
+import * as FirebaseAuth from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: 'AIzaSyAPgBN-E74IdmT1s8f_m-Bc4UIWumIXXh8',
@@ -14,5 +16,15 @@ const firebaseConfig: FirebaseOptions = {
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
+// Metro loads Firebase's React Native entry point, which includes this helper.
+// Firebase's default TypeScript declaration currently omits it.
+const getReactNativePersistence = (
+  FirebaseAuth as typeof FirebaseAuth & {
+    getReactNativePersistence: (storage: typeof AsyncStorage) => Persistence;
+  }
+).getReactNativePersistence;
+
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 export const db = getFirestore(app);

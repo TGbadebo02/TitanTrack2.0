@@ -39,6 +39,17 @@ export const initialUserInfo: UserInfo = {
   fitnessGoal: '',
 };
 
+const requiredOnboardingFields: Array<keyof UserInfo> = [
+  'gender',
+  'age',
+  'weight',
+  'fitnessLevel',
+  'fitnessGoal',
+];
+
+export const isOnboardingComplete = (userInfo: Partial<UserInfo>): boolean =>
+  requiredOnboardingFields.every((field) => String(userInfo[field] ?? '').trim().length > 0);
+
 export const UserContext = createContext<UserContextValue>({
   userInfo: initialUserInfo,
   setUserInfo: () => {},

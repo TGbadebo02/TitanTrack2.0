@@ -89,7 +89,7 @@ const ProfileScreen = () => {
 
       <View style={styles.profilePhotoContainer}>
         <Image
-          source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Profile.png')}
+          source={require('../assets/icons/Profile.png')}
           style={styles.profilePhoto}
         />
         <Text style={styles.changePhotoText}>change your profile photo</Text>

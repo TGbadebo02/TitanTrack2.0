@@ -11,14 +11,14 @@ import {
 const IntroScreen = ({ navigation }) => {
   return (
     <ImageBackground
-      source={require("/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/images/Intro-page-2.png")} 
+      source={require("../assets/images/Intro-page-2.png")}
       style={styles.background}
     >
       <View style={styles.overlay}>
         <View style={styles.logoRow}>
           <Text style={styles.logoText}>TitanTrack</Text>
           <Image
-            source={require('/Users/tgbadebo02/Desktop/TitanTrack2.0/src/assets/icons/Logo.png')}
+            source={require('../assets/icons/Logo.png')}
             style={styles.logoImage}
      
           />
