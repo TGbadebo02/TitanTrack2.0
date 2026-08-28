@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { type NavigationProp, type ParamListBase, useNavigation } from '@react-navigation/native';
 import { signOut } from 'firebase/auth';
 import { UserContext } from '../context/UserOnboardingContext';
 import { auth } from '../firebase/config';
@@ -19,8 +18,6 @@ import { initialUserInfo } from '../context/UserOnboardingContext';
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
-
   useEffect(() => {
     const loadUserProfile = async () => {
       try {
@@ -70,7 +67,6 @@ const ProfileScreen = () => {
     try {//
       await signOut(auth);
       setUserInfo(initialUserInfo);
-      navigation.navigate('LoginScreen');
     } catch (error) {
       const message =
         error instanceof Error ? error.message : 'Unable to log out.';
