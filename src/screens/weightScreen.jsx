@@ -42,7 +42,7 @@ const WeightPickerScreen = ({ navigation }) => {
           style={styles.circleButton}
           onPress={() => {
             setUserInfo((previous) => ({...previous, weight: String(weight)}));
-          navigation.navigate('FitnsScreen')
+          navigation.navigate('FitnessLevelScreen')
           }}
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />

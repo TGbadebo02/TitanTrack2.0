@@ -22,7 +22,7 @@ import WeightScreen from './src/screens/weightScreen';
 import fitnessScrn from './src/screens/fitnessLvl';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
-import goalScreen from './src/screens/goalScreen';
+import GoalScreen from './src/screens/GoalScreen';
 import profileScreen from './src/screens/profileScreen';
 import homeScreen from './src/screens/homeScreen';
 import WorkoutScreen from './src/screens/workoutScreen';
@@ -128,8 +128,8 @@ function AppNavigator() {
             <Stack.Screen name="AbtYourself" component={AbtYourself} />
             <Stack.Screen name="AgeScreen" component={AgeScreen} />
             <Stack.Screen name="WeightScreen" component={WeightScreen} />
-            <Stack.Screen name="FitnsScreen" component={fitnessScrn} />
-            <Stack.Screen name="goalScreen" component={goalScreen} />
+            <Stack.Screen name="FitnessLevelScreen" component={fitnessScrn} />
+            <Stack.Screen name="GoalScreen" component={GoalScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
           </>

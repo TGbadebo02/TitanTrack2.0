@@ -10,7 +10,7 @@ const FitnessLevelScreen = ({ navigation }) => {
 
   const handleSelection = (level) => {
     setUserInfo((previous) => ({ ...previous, fitnessLevel: level }));
-    navigation.navigate('goalScreen'); 
+    navigation.navigate('GoalScreen');
   };
 
   return (
@@ -42,7 +42,7 @@ const FitnessLevelScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={[styles.circleButton, !userInfo.fitnessLevel && styles.circleButtonDisabled]}
-          onPress={() => navigation.navigate('goalScreen')} 
+          onPress={() => navigation.navigate('GoalScreen')}
           disabled={!userInfo.fitnessLevel}
         >
           <Ionicons name="arrow-forward" size={26} color="#fff" />
