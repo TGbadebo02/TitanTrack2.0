@@ -26,9 +26,11 @@ import GoalScreen from './src/screens/GoalScreen';
 import profileScreen from './src/screens/profileScreen';
 import homeScreen from './src/screens/homeScreen';
 import WorkoutScreen from './src/screens/workoutScreen';
+import type { AuthStackParamList, MainTabParamList, AppStackParamList } from './src/navigation/types';
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainTabParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const tabIcons = {
   Home: require('./src/assets/icons/Home.png'),
@@ -57,6 +59,34 @@ function Tabs() {
     </Tab.Navigator>
   );
 }
+
+function AuthNavigator() { 
+  return (
+    <AuthStack.Navigator screenOptions={{ headerShown: false}}>
+      <AuthStack.Screen name="IntroScreen" component={IntroScreen} />
+      <AuthStack.Screen name="AdvertisingPage" component={AdvertPage1} />
+      <AuthStack.Screen name="AdvertisingPage2" component={AdvertPage2} />
+      <AuthStack.Screen name="AbtYourself" component={AbtYourself} />
+      <AuthStack.Screen name="AgeScreen" component={AgeScreen} />
+      <AuthStack.Screen name="WeightScreen" component={WeightScreen} />
+      <AuthStack.Screen name="FitnessLevelScreen" component={fitnessScrn} />
+      <AuthStack.Screen name="GoalScreen" component={GoalScreen} />
+      <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
+    </AuthStack.Navigator>
+  );
+}
+
+function AuthenticatedNavigator(){
+  return(
+    <AppStack.Navigator screenOptions = {{headerShown: false}}>
+      <AppStack.Screen name="Tabs" component={Tabs}/>
+      <AppStack.Screen name="WorkoutScreen" component={WorkoutScreen}/>
+    </AppStack.Navigator>
+  )
+}
+
+
 
 function AppNavigator() {
   const { setUserInfo } = useContext(UserContext);
@@ -110,31 +140,7 @@ function AppNavigator() {
       
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isAuthenticated ? (
-          <>
-            <Stack.Screen
-              name="Tabs"
-              component={Tabs}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="WorkoutScreen" component={WorkoutScreen} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="IntroScreen" component={IntroScreen} />
-            <Stack.Screen name="AdvertisingPage" component={AdvertPage1} />
-            <Stack.Screen name="AdvertisingPage2" component={AdvertPage2} />
-            <Stack.Screen name="AbtYourself" component={AbtYourself} />
-            <Stack.Screen name="AgeScreen" component={AgeScreen} />
-            <Stack.Screen name="WeightScreen" component={WeightScreen} />
-            <Stack.Screen name="FitnessLevelScreen" component={fitnessScrn} />
-            <Stack.Screen name="GoalScreen" component={GoalScreen} />
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="SignupScreen" component={SignupScreen} />
-          </>
-        )}
-      </Stack.Navigator>
+      {isAuthenticated ? <AuthenticatedNavigator/> : <AuthNavigator/>}
     </NavigationContainer>
   );
 }
