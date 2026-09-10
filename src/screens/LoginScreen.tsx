@@ -9,11 +9,9 @@ import {
   View,
 } from 'react-native';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
-import {
-  type NavigationProp,
-  type ParamListBase,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import type {AuthStackParamList} from '../navigation/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { Controller, useForm } from 'react-hook-form';
@@ -38,12 +36,13 @@ const loginSchema = z.object({
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
+type LoginNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'LoginScreen'>;
 
 const LoginScreen = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const { setUserInfo } = useContext(UserContext);
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const navigation = useNavigation<LoginNavigationProp>();
   const {
     control,
     handleSubmit,
