@@ -24,12 +24,14 @@ export default function MainTabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: '#4ade80',
+        tabBarInactiveTintColor: '#a1a1aa',
         tabBarStyle: styles.tabBar,
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({ color }) => (
           <Image
             source={tabIcons[route.name]}
-            style={[styles.tabIcon, !focused && styles.tabIconInactive]}
+            style={[styles.tabIcon, { tintColor: color }]}
           />
         ),
       })}
@@ -53,8 +55,5 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: 'contain',
-  },
-  tabIconInactive: {
-    opacity: 0.85,
   },
 });

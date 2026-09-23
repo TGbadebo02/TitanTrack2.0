@@ -14,14 +14,15 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import type { NavigationProp, ParamListBase } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UserContext } from '../context/UserOnboardingContext';
+import type {AppStackParamList, MainTabParamList} from '../navigation/types';
 
 const levels = ['Beginner', 'Intermediate', 'Advanced'] as const;
 const progressSteps = [0, 20, 40, 60, 80, 100] as const;
 
 type Level = (typeof levels)[number];
-type TabName = 'Home' | 'Profile' | 'Report';
+type TabName = keyof MainTabParamList;
 type ProgressStep = (typeof progressSteps)[number];
 
 type Exercise = {
@@ -36,9 +37,7 @@ type RawExercise = Omit<Exercise, 'progress'> & {
   progress: number;
 };
 
-type WorkoutScreenProps = {
-  navigation: NavigationProp<ParamListBase>;
-};
+type WorkoutScreenProps = NativeStackScreenProps<AppStackParamList, 'WorkoutScreen'>;
 
 const tabIcons: Record<TabName, ImageSourcePropType> = {
   Home: require('../assets/icons/Home.png'),

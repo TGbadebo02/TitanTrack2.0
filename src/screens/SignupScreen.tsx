@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
-import { useNavigation, type NavigationProp, type ParamListBase } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Controller, useForm } from 'react-hook-form';
@@ -20,6 +20,9 @@ import { isOnboardingComplete, UserContext } from '../context/UserOnboardingCont
 import { auth } from '../firebase/config';
 import { saveUserProfile } from '../firebase/userService';
 import { getAuthErrorMessage } from '../firebase/authErrors';
+
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { AuthStackParamList } from '../navigation/types';
 
 const signupSchema = z
   .object({
@@ -33,11 +36,12 @@ const signupSchema = z
   });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
+type SignupNavigationProp = NativeStackNavigationProp<AuthStackParamList,'SignupScreen'>;
 
 const SignupScreen = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { userInfo } = useContext(UserContext);
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const navigation = useNavigation<SignupNavigationProp>();
   const {
     control,
     handleSubmit,

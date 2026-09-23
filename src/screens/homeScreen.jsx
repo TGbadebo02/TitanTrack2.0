@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import {
   Image,
   ScrollView,
@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import { UserContext } from '../context/UserOnboardingContext';
 
 const challengeByLevel = {
@@ -47,9 +48,12 @@ const hiddenTabBarStyle = {
   display: 'none',
 };
 
+const SCROLL_THRESHOLD = 12;
+
 const HomeScreen = ({ navigation }) => {
   const { userInfo } = useContext(UserContext);
-  const hideTimerRef = useRef(null);
+  const scrollAnchorY = useRef(null);
+  const tabBarVisible = useRef(true);
 
   const firstName = userInfo.firstname?.trim();
   const surname = userInfo.surname?.trim();
@@ -67,59 +71,48 @@ const HomeScreen = ({ navigation }) => {
   const motivationQuote =
     quoteByGoal[fitnessGoal] || quoteByGoal['Stay Active'];
 
-  const showTabBar = () => {
-    navigation.setOptions({
-      tabBarStyle: visibleTabBarStyle,
-    });
-  };
+  const setTabBarVisible = useCallback((visible) => {
+    if (tabBarVisible.current === visible) return;
 
-  const hideTabBar = () => {
+    tabBarVisible.current = visible;
     navigation.setOptions({
-      tabBarStyle: hiddenTabBarStyle,
+      tabBarStyle: visible ? visibleTabBarStyle : hiddenTabBarStyle,
     });
-  };
+  }, [navigation]);
 
-  const resetHideTimer = () => {
-    if (hideTimerRef.current) {
-      clearTimeout(hideTimerRef.current);
+  useFocusEffect(useCallback(() => {
+    setTabBarVisible(true);
+    scrollAnchorY.current = null;
+  }, [setTabBarVisible]));
+
+  const handleScroll = (event) => {
+    const currentY = Math.max(0, event.nativeEvent.contentOffset.y);
+
+    if (scrollAnchorY.current === null) {
+      scrollAnchorY.current = currentY;
+      return;
     }
 
-    hideTimerRef.current = setTimeout(() => {
-      hideTabBar();
-    }, 900);
+    if (currentY <= SCROLL_THRESHOLD) {
+      scrollAnchorY.current = 0;
+      setTabBarVisible(true);
+      return;
+    }
+
+    const distance = currentY - scrollAnchorY.current;
+
+    if (Math.abs(distance) < SCROLL_THRESHOLD) return;
+
+    setTabBarVisible(distance < 0);
+    scrollAnchorY.current = currentY;
   };
-
-  useEffect(() => {
-    showTabBar();
-    resetHideTimer();
-
-    return () => {
-      if (hideTimerRef.current) {
-        clearTimeout(hideTimerRef.current);
-      }
-
-      showTabBar();
-    };
-  }, []);
 
   return (
     <View style={styles.screen}>
       <StatusBar barStyle="light-content" />
 
       <ScrollView
-        onScrollBeginDrag={() => {
-          showTabBar();
-        }}
-        onScroll={() => {
-          showTabBar();
-          resetHideTimer();
-        }}
-        onScrollEndDrag={() => {
-          resetHideTimer();
-        }}
-        onMomentumScrollEnd={() => {
-          resetHideTimer();
-        }}
+        onScroll={handleScroll}
         scrollEventThrottle={16}
         style={styles.container}
         contentContainerStyle={styles.content}
