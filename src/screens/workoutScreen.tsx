@@ -1,8 +1,6 @@
 import React, { useContext, useMemo, useState } from 'react';
 import {
   Alert,
-  Image,
-  ImageSourcePropType,
   Pressable,
   ScrollView,
   StatusBar,
@@ -16,13 +14,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UserContext } from '../context/UserOnboardingContext';
-import type {AppStackParamList, MainTabParamList} from '../navigation/types';
+import type { AppStackParamList } from '../navigation/types';
 
 const levels = ['Beginner', 'Intermediate', 'Advanced'] as const;
 const progressSteps = [0, 20, 40, 60, 80, 100] as const;
 
 type Level = (typeof levels)[number];
-type TabName = keyof MainTabParamList;
 type ProgressStep = (typeof progressSteps)[number];
 
 type Exercise = {
@@ -38,12 +35,6 @@ type RawExercise = Omit<Exercise, 'progress'> & {
 };
 
 type WorkoutScreenProps = NativeStackScreenProps<AppStackParamList, 'WorkoutScreen'>;
-
-const tabIcons: Record<TabName, ImageSourcePropType> = {
-  Home: require('../assets/icons/Home.png'),
-  Profile: require('../assets/icons/Profile.png'),
-  Report: require('../assets/icons/Bar Chart.png'),
-};
 
 const workoutTitleByGoal: Record<string, string> = {
   'Build Muscle': 'Strength Builder',
@@ -329,26 +320,6 @@ const WorkoutScreen = ({ navigation }: WorkoutScreenProps) => {
           </Pressable>
         </View>
 
-        <View style={styles.navBar}>
-          {Object.keys(tabIcons).map((tabName) => {
-            const typedTabName = tabName as TabName;
-            const isActive = tabName === 'Home';
-
-            return (
-              <TouchableOpacity
-                key={tabName}
-                activeOpacity={0.85}
-                style={styles.navItem}
-                onPress={() => navigation.navigate('Tabs', { screen: typedTabName })}
-              >
-                <Image
-                  source={tabIcons[typedTabName]}
-                  style={[styles.navIcon, !isActive && styles.navIconInactive]}
-                />
-              </TouchableOpacity>
-            );
-          })}
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -662,28 +633,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     marginLeft: 8,
-  },
-  navBar: {
-    marginTop: 'auto',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#2A2426',
-    borderRadius: 24,
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-  },
-  navItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 54,
-  },
-  navIcon: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-  },
-  navIconInactive: {
-    opacity: 0.85,
   },
 });
